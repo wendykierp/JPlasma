@@ -1,0 +1,91 @@
+<project basedir="." default="build" name="jplasma">
+	<property name="version" value="1.0" />
+
+	<property name="compiler" value="javac1.5" />
+
+	<property name="source" value="1.5" />
+
+	<property name="target" value="1.5" />
+
+	<property name="dist.dir" value="../${ant.project.name}-dist" />
+
+	<property name="proj.title" value="JPlasma" />
+
+	<property name="javac.src" value="src" />
+
+	<property name="javac.dest" value="bin" />
+
+	<property name="doc.dest" value="doc" />
+
+	<property name="lib.dir" value="lib" />
+
+	<property name="jar.dir" value="${basedir}" />
+
+	<property name="jar.filename" value="${ant.project.name}-${version}.jar" />
+
+	<property name="src.tar.excludes" value="*/${javac.dest}/** */${jar.filename} */${doc.dest}/** */*.jardesc" />
+
+	<property name="doc.tar.includes" value="${doc.dest}/**" />
+
+	<property name="arpack.jar" value="${lib.dir}/arpack-combo-0.1.jar" />
+
+	<property name="corelapack.jar" value="${lib.dir}/core-lapack.jar" />
+
+	<property name="classpath" value="${corelapack.jar}:${arpack.jar}" />
+
+	<target name="clean">
+		<delete dir="${javac.dest}" />
+		<delete file="${jar.filename}" />
+	</target>
+
+	<target name="clean-dist">
+		<delete dir="${dist.dir}" />
+	</target>
+
+
+	<target name="build" depends="jar">
+	</target>
+
+	<target name="javac" depends="clean">
+		<mkdir dir="${javac.dest}" />
+		<javac classpath="${classpath}" srcdir="${javac.src}" destdir="${javac.dest}" includes="**/*.java" deprecation="on" debug="off" compiler="${compiler}" source="${source}" target="${target}">
+			<compilerarg value="-Xlint" />
+		</javac>
+	</target>
+
+
+	<target name="jar" depends="javac">
+		<jar destfile="${jar.dir}/${jar.filename}" index="yes" compress="yes" filesetmanifest="mergewithoutmain">
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Class-Path" value="." />
+			</manifest>
+			<fileset dir="${javac.dest}" />
+			<zipfileset excludes="META-INF/*.SF" src="${arpack.jar}" />
+			<zipfileset excludes="META-INF/*.SF" src="${corelapack.jar}" />
+		</jar>
+	</target>
+
+
+	<target name="doc">
+		<delete dir="${doc.dest}" />
+		<mkdir dir="${doc.dest}" />
+		<javadoc classpath="${classpath}" sourcepath="${javac.src}" destdir="${doc.dest}" public="true" author="true" use="true" splitIndex="true" version="true" doctitle="&lt;h2&gt;JPlasma&lt;/h2&gt;&lt;h4&gt;Java port of &lt;a target=_blank href=http://icl.cs.utk.edu/plasma/index.html &gt;PLASMA&lt;/a&gt; (Parallel Linear Algebra for Scalable Multi-core Architectures)&lt;/h4&gt;&lt;hr&gt;" windowtitle="JPlasma ${version} - API Specification" header="&lt;b&gt;JPlasma ${version}&lt;/b&gt;">
+			<packageset dir="${javac.src}" />
+		</javadoc>
+	</target>
+
+	<target name="dist" depends="build, doc, clean-dist">
+		<basename property="proj.basename" file="." />
+		<mkdir dir="${dist.dir}/" />
+		<copy todir="${dist.dir}/">
+			<fileset dir="${jar.dir}" includes="${jar.filename}" />
+		</copy>
+		<tar tarfile="${dist.dir}/${ant.project.name}-${version}-doc.tar.bz2" basedir=".." includes="${proj.basename}/${doc.tar.includes}" compression="bzip2" longfile="gnu" />
+		<zip zipfile="${dist.dir}/${ant.project.name}-${version}-doc.zip" basedir=".." includes="${proj.basename}/${doc.tar.includes}" />
+
+		<tar tarfile="${dist.dir}/${ant.project.name}-${version}-src.tar.bz2" basedir=".." includes="${proj.basename}/" excludes="${src.tar.excludes}" compression="bzip2" longfile="gnu" />
+		<zip zipfile="${dist.dir}/${ant.project.name}-${version}-src.zip" basedir=".." includes="${proj.basename}/" excludes="${src.tar.excludes}" />
+	</target>
+
+</project>
