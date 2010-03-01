@@ -236,7 +236,7 @@ public class DposvTest {
             System.out.print(" ---- TESTING DPOTRF + DTRSM + DTRSM ... FAILED !\n");
             System.out.print("************************************************\n");
         }
-        System.exit(0);
+//        System.exit(0);
     }
 
     /*------------------------------------------------------------------------

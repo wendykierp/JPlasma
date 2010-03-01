@@ -1,5 +1,5 @@
 <project basedir="." default="build" name="jplasma">
-	<property name="version" value="1.0" />
+	<property name="version" value="1.1" />
 
 	<property name="compiler" value="javac1.5" />
 

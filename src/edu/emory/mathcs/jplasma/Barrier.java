@@ -60,6 +60,7 @@ public class Barrier {
         workersLatch = new CountDownLatch(num_workers);
         masterLock = new ReentrantLock();
         masterCondition = masterLock.newCondition();
+
     }
 
     /*////////////////////////////////////////////////////////////////////////////////////////
@@ -73,9 +74,9 @@ public class Barrier {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            workersLatch = new CountDownLatch(cores_num - 1);
             masterLock.lock();
             try {
+                workersLatch = new CountDownLatch(cores_num - 1);
                 for (core = 1; core < cores_num; core++)
                     barrier_out[core] = 1;
                 masterCondition.signalAll();
@@ -83,8 +84,8 @@ public class Barrier {
                 masterLock.unlock();
             }
         } else {
-            workersLatch.countDown();
-            masterLock.lock();
+           workersLatch.countDown();
+           masterLock.lock();
             try {
                 while (barrier_out[my_core_id] == 0) {
                     masterCondition.await();

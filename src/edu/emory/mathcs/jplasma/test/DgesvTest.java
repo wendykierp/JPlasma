@@ -207,7 +207,7 @@ public class DgesvTest {
             System.out.print(" ---- TESTING DGETRF + DTRSMPL + DTRSM ... FAILED !\n");
             System.out.print("************************************************\n");
         }
-        System.exit(0);
+//        System.exit(0);
     }
 
     /*------------------------------------------------------------------------

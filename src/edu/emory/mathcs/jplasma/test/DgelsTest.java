@@ -176,7 +176,7 @@ public class DgelsTest {
             System.out.print("************************************************\n");
         }
         Dplasma.plasma_Finalize();
-        System.exit(0);
+//        System.exit(0);
     }
 
     /*-------------------------------------------------------------------

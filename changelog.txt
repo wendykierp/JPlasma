@@ -1,4 +1,9 @@
 JPlasma changelog
 
+1.1:	February 28, 2010
+	- Fixed bug in Barrier that caused a deadlock.
+	- Removed unnecessary threads joining in plasma_Finalize. 
+	- Some changes in ConcurrencyUtils.
+
 1.0:	June 7, 2009
 	- Initial release.

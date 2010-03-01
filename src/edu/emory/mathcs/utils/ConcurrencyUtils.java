@@ -46,7 +46,7 @@ import java.util.concurrent.ThreadFactory;
  * @author Piotr Wendykier (piotr.wendykier@gmail.com)
  */
 public class ConcurrencyUtils {
-    private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool(new CustomThreadFactory(
+    private static ExecutorService THREAD_POOL = Executors.newCachedThreadPool(new CustomThreadFactory(
             new CustomExceptionHandler()));
 
     private static int NTHREADS = getNumberOfProcessors();
@@ -69,9 +69,18 @@ public class ConcurrencyUtils {
         public Thread newThread(Runnable r) {
             Thread t = defaultFactory.newThread(r);
             t.setUncaughtExceptionHandler(handler);
+            t.setDaemon(true);
             return t;
         }
     };
+    
+    /**
+     * Shutdowns the thread pool.
+     */
+    public static void shutdown() {
+        THREAD_POOL.shutdown();
+    }
+
 
     /**
      * Submits a value-returning task for execution and returns a Future
@@ -83,6 +92,9 @@ public class ConcurrencyUtils {
      * @return a handle to the task submitted for execution
      */
     public static <T> Future<T> submit(Callable<T> task) {
+        if (THREAD_POOL.isShutdown() || THREAD_POOL.isTerminated()) {
+            THREAD_POOL = Executors.newCachedThreadPool(new CustomThreadFactory(new CustomExceptionHandler()));
+        }
         return THREAD_POOL.submit(task);
     }
 
@@ -95,9 +107,12 @@ public class ConcurrencyUtils {
      * @return a handle to the task submitted for execution
      */
     public static Future<?> submit(Runnable task) {
+        if (THREAD_POOL.isShutdown() || THREAD_POOL.isTerminated()) {
+            THREAD_POOL = Executors.newCachedThreadPool(new CustomThreadFactory(new CustomExceptionHandler()));
+        }
         return THREAD_POOL.submit(task);
     }
-
+    
     /**
      * Returns the number of available processors
      * 

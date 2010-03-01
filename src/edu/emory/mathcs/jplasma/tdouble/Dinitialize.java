@@ -33,7 +33,6 @@
 
 package edu.emory.mathcs.jplasma.tdouble;
 
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.locks.Lock;
 
@@ -148,9 +147,8 @@ class Dinitialize {
      *  PLASMA completion
      */
     protected static int plasma_Finalize() {
-        int core;
         int status;
-
+        
         /* Check if initialized */
         if (!Dcommon.plasma_cntrl.initialized) {
             Dauxiliary.plasma_warning("plasma_finalize", "PLASMA not initialized");
@@ -162,29 +160,13 @@ class Dinitialize {
         lock.lock();
         try {
             Dcommon.plasma_cntrl.action = Dglobal.PLASMA_ACT_FINALIZE;
-            Dcommon.plasma_cntrl.action_condt.signal();
+            Dcommon.plasma_cntrl.action_condt.signalAll();
         } finally {
             lock.unlock();
         }
 
         /* Barrier and clear action */
         Barrier.plasma_barrier(0, Dcommon.plasma_cntrl.cores_num);
-        Dcommon.plasma_cntrl.action = Dglobal.PLASMA_ACT_STAND_BY;
-
-        // Join threads
-        int cores_num = Dcommon.plasma_cntrl.cores_num;
-        Future<?>[] workers = Dcommon.plasma_cntrl.workers;
-        for (core = 1; core < cores_num; core++) {
-            try {
-                workers[core].get();
-            } catch (InterruptedException e) {
-                Dauxiliary.plasma_error("plasma_finalize", "joining threads failed");
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                Dauxiliary.plasma_error("plasma_finalize", "joining threads failed");
-                e.printStackTrace();
-            }
-        }
 
         /* Release memory for storage in BDL */
         status = Dallocate.plasma_free_aux_bdl();
