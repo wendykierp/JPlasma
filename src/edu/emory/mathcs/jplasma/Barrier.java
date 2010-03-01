@@ -84,9 +84,9 @@ public class Barrier {
                 masterLock.unlock();
             }
         } else {
-           workersLatch.countDown();
            masterLock.lock();
             try {
+                workersLatch.countDown();
                 while (barrier_out[my_core_id] == 0) {
                     masterCondition.await();
                 }
