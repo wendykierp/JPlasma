@@ -44,6 +44,13 @@ import edu.emory.mathcs.jplasma.tdouble.Dplasma;
 public class DgelsTest {
 
     public static void main(String[] args) {
+        int n = 10;
+        for (int i = 0; i < n; i++) {
+           dgelsTest(args);
+        }
+    }
+    
+    public static void dgelsTest(String[] args) {
 
         /* Check for number of arguments*/
         if (args.length != 5) {
@@ -151,6 +158,7 @@ public class DgelsTest {
         Dplasma.plasma_Init(M, N, NRHS);
         Dplasma.plasma_DTRSM(Dplasma.PlasmaLeft, Dplasma.PlasmaUpper, Dplasma.PlasmaNoTrans, Dplasma.PlasmaNonUnit, N,
                 NRHS, A2, 0, LDA, B2, 0, LDB);
+        Dplasma.plasma_Finalize();
 
         System.out.print("\n");
         System.out.print("------ TESTS FOR PLASMA DGEQRF + DORMQR + DTRSM  ROUTINE -------  \n");
@@ -175,8 +183,6 @@ public class DgelsTest {
             System.out.print(" ---- TESTING DGEQRF + DORMQR + DTRSM .... FAILED !\n");
             System.out.print("************************************************\n");
         }
-        Dplasma.plasma_Finalize();
-//        System.exit(0);
     }
 
     /*-------------------------------------------------------------------

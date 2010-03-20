@@ -42,8 +42,15 @@ import edu.emory.mathcs.jplasma.tdouble.Dplasma;
  * 
  */
 public class DgesvTest {
-
+    
     public static void main(String[] args) {
+        int n = 10;
+        for (int i = 0; i < n; i++) {
+            dgesvTest(args);
+        }
+    }
+
+    public static void dgesvTest(String[] args) {
 
         /* Check for valid arguments*/
         if (args.length != 4) {
@@ -207,7 +214,6 @@ public class DgesvTest {
             System.out.print(" ---- TESTING DGETRF + DTRSMPL + DTRSM ... FAILED !\n");
             System.out.print("************************************************\n");
         }
-//        System.exit(0);
     }
 
     /*------------------------------------------------------------------------

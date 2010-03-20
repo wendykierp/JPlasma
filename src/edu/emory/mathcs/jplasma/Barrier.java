@@ -47,27 +47,21 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Barrier {
 
-    private static volatile int[] barrier_out;
     private static CountDownLatch workersLatch;
     private static Lock masterLock;
     private static Condition masterCondition;
 
     /*////////////////////////////////////////////////////////////////////////////////////////
-     *  Busy-waiting barrier initialization
+     *  Barrier initialization
      */
     public static void plasma_barrier_init(int num_workers) {
-        barrier_out = new int[num_workers + 1];
         workersLatch = new CountDownLatch(num_workers);
         masterLock = new ReentrantLock();
         masterCondition = masterLock.newCondition();
 
     }
 
-    /*////////////////////////////////////////////////////////////////////////////////////////
-     *  Busy-waiting barrier
-     */
     public static void plasma_barrier(int my_core_id, int cores_num) {
-        int core;
         if (my_core_id == 0) {
             try {
                 workersLatch.await();
@@ -77,8 +71,6 @@ public class Barrier {
             masterLock.lock();
             try {
                 workersLatch = new CountDownLatch(cores_num - 1);
-                for (core = 1; core < cores_num; core++)
-                    barrier_out[core] = 1;
                 masterCondition.signalAll();
             } finally {
                 masterLock.unlock();
@@ -87,23 +79,12 @@ public class Barrier {
            masterLock.lock();
             try {
                 workersLatch.countDown();
-                while (barrier_out[my_core_id] == 0) {
-                    masterCondition.await();
-                }
-                barrier_out[my_core_id] = 0;
+                masterCondition.await();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
                 masterLock.unlock();
             }
-        }
-    }
-
-    protected static void delay() {
-        try {
-            Thread.sleep(0);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 }

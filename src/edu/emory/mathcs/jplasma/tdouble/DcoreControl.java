@@ -110,7 +110,7 @@ class DcoreControl implements Runnable {
             case Dglobal.PLASMA_ACT_FINALIZE:
                 return;
             default:
-                break;
+                return;
             }
             Barrier.plasma_barrier(my_core_id, cores_num);
         }

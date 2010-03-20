@@ -44,6 +44,13 @@ import edu.emory.mathcs.jplasma.tdouble.Dplasma;
 public class DposvTest {
 
     public static void main(String[] args) {
+        int n = 10;
+        for (int i = 0; i < n; i++) {
+            dposvTest(args);
+        }
+    }
+    
+    public static void dposvTest(String[] args) {
 
         /* Check for number of arguments*/
         if (args.length != 4) {
@@ -236,7 +243,6 @@ public class DposvTest {
             System.out.print(" ---- TESTING DPOTRF + DTRSM + DTRSM ... FAILED !\n");
             System.out.print("************************************************\n");
         }
-//        System.exit(0);
     }
 
     /*------------------------------------------------------------------------
@@ -256,7 +262,6 @@ public class DposvTest {
         double[] work = new double[N];
 
         alpha = 1.0;
-
         org.netlib.lapack.Dlacpy.dlacpy("ALL", N, N, A1, 0, LDA, Residual, 0, N);
 
         /* Dealing with L'L or U'U  */
