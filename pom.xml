@@ -13,7 +13,7 @@
         <github.global.server>github</github.global.server>
         <project.scm.id>github</project.scm.id>
         <skipTests>false</skipTests>     <!--set false to enable tests-->
-        <gpg.skip>true</gpg.skip>       <!--set false to enable GPG-->
+        <gpg.skip>false</gpg.skip>       <!--set false to enable GPG-->
     </properties>
 
 
@@ -63,7 +63,7 @@
                 <version>3.12.0</version>
                 <configuration>
                     <source>17</source>
-                    <doclint>none</doclint>
+                    <doclint>html</doclint>
                 </configuration> 
                 <executions>
                     <execution>
