@@ -458,10 +458,10 @@ public class Dplasma {
      *            of B contain the least squares solution vectors; the residual
      *            sum of squares for the solution in each column is given by the
      *            sum of squares of elements N+1 to M in that column; if trans =
-     *            PlasmaNoTrans and M < N, rows 1 to N of B contain the minimum
+     *            PlasmaNoTrans and M {@literal <} N, rows 1 to N of B contain the minimum
      *            norm solution vectors; if trans = PlasmaTrans and M >= N, rows
      *            1 to M of B contain the minimum norm solution vectors; if
-     *            trans = PlasmaTrans and M < N, rows 1 to M of B contain the
+     *            trans = PlasmaTrans and M {@literal <} N, rows 1 to M of B contain the
      *            least squares solution vectors; the residual sum of squares
      *            for the solution in each column is given by the sum of squares
      *            of elements M+1 to N in that column.
@@ -531,25 +531,25 @@ public class Dplasma {
 
     /**
      * Overwrites the general real M-by-N matrix B with
-     * <p>
+     * 
      * <table border=1>
-     * <tr align="center">
+     * <tr>
      * <td></td>
      * <td>side = PlasmaLeft</td>
      * <td>side = PlasmaRight</td>
      * </tr>
-     * <tr align="center">
+     * <tr>
      * <td>trans = PlasmaNoTrans</td>
      * <td>Q * B</td>
      * <td>B * Q</td>
      * </tr>
-     * <tr align="center">
+     * <tr>
      * <td>trans = PlasmaTrans</td>
      * <td>Q**T * B</td>
      * <td>B * Q**T</td>
      * </tr>
      * </table>
-     * </p>
+     * 
      * where Q is a real orthogonal matrix defined as the product of k
      * elementary reflectors
      * 
@@ -661,7 +661,7 @@ public class Dplasma {
      * The factorization has the form A = P * L * U where P is a permutation
      * matrix, L is lower triangular with unit diagonal elements (lower
      * trapezoidal if M > N), and U is upper triangular (upper trapezoidal if M
-     * < N).
+     * {@literal <} N).
      * 
      * @param M
      *            The number of rows of the matrix A. M >= 0.
@@ -682,7 +682,7 @@ public class Dplasma {
      * @param L_offset
      *            The index of the first element in the array L.
      * @param IPIV
-     *            The pivot indices; for 1 <= i <= min(M,N), row i of the matrix
+     *            The pivot indices; for 1 {@literal <=} i {@literal <=} min(M,N), row i of the matrix
      *            was interchanged with row IPIV(i). This array has to be
      *            allocated by plasma_Allocate_IPIV.
      * @param IPIV_offset
@@ -721,7 +721,7 @@ public class Dplasma {
      * @param L_offset
      *            The index of the first element in the array L.
      * @param IPIV
-     *            The pivot indices from plasma_DGETRF; for 1<=i<=N, row i of
+     *            The pivot indices from plasma_DGETRF; for 1 {@literal <=} i {@literal <=} N, row i of
      *            the matrix was interchanged with row IPIV(i).
      * @param IPIV_offset
      *            The index of the first element in the array IPIV.
@@ -765,7 +765,7 @@ public class Dplasma {
      * @param L_offset
      *            The index of the first element in the array L.
      * @param IPIV
-     *            The pivot indices from plasma_DGETRF; for 1<=i<=N, row i of
+     *            The pivot indices from plasma_DGETRF; for 1 {@literal <=} i {@literal <=} N, row i of
      *            the matrix was interchanged with row IPIV(i).
      * @param IPIV_offset
      *            The index of the first element in the array IPIV.
