@@ -1,0 +1,18 @@
+JPlasma changelog
+
+1.3:	December 5, 2025
+	- Repackaging: edu.emory.mathcs -> com.github.wendykierp.
+        - Added JUnit as test dependency.
+	- Changed build system from Ant to Maven.
+        - Moved source code repository from sf.net to github.com.
+
+1.2:	March 20, 2010
+	- Another try at fixing a bug in Barrier that caused a deadlock.
+
+1.1:	March 1, 2010
+        - Fixed bug in Barrier that caused a deadlock.
+        - Removed unnecessary threads joining in plasma_Finalize.
+        - Some changes in ConcurrencyUtils.
+
+1.0:    June 7, 2009
+        - Initial release.
