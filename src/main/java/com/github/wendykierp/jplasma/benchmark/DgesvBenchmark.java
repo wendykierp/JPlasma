@@ -132,7 +132,7 @@ public class DgesvBenchmark {
 
     public static void main(String[] args) {
         if (args.length != 4) {
-            System.out.println("Usage: java edu.emory.mathcs.jplasma.benchmark.DgesvBenchmark N NRHS NITERS NTHREADS");
+            System.out.println("Usage: java com.github.wendykierp.jplasma.benchmark.DgesvBenchmark N NRHS NITERS NTHREADS");
             System.exit(1);
         }
         int N = Integer.parseInt(args[0]);

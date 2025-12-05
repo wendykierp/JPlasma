@@ -134,7 +134,7 @@ public class DgelsBenchmark {
     public static void main(String[] args) {
         if (args.length != 5) {
             System.out
-                    .println("Usage: java edu.emory.mathcs.jplasma.benchmark.DgelsBenchmark M N NRHS NITERS NTHREADS");
+                    .println("Usage: java com.github.wendykierp.jplasma.benchmark.DgelsBenchmark M N NRHS NITERS NTHREADS");
             System.exit(1);
         }
         int M = Integer.parseInt(args[0]);
