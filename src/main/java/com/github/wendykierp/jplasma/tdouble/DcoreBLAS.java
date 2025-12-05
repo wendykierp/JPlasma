@@ -33,6 +33,8 @@
 
 package com.github.wendykierp.jplasma.tdouble;
 
+import dev.ludovic.netlib.lapack.LAPACK;
+import dev.ludovic.netlib.blas.BLAS;
 import org.netlib.util.intW;
 
 class DcoreBLAS {
@@ -44,15 +46,14 @@ class DcoreBLAS {
     /*////////////////////////////////////////////////////////////////////////////////////////
      */
     protected static void core_DPOTRF(int uplo, int N, double[] A, int A_offset, int LDA, intW INFO) {
-        edu.emory.mathcs.jplasma.tdouble.corelapack.Dpotrf
-                .dpotrf(Dplasma.lapack_const(uplo), N, A, A_offset, LDA, INFO);
+        LAPACK.getInstance().dpotrf(Dplasma.lapack_const(uplo), N, A, A_offset, LDA, INFO);
     }
 
     /*////////////////////////////////////////////////////////////////////////////////////////
      */
     protected static void core_DSYRK(int uplo, int trans, int N, int K, double alpha, double[] A, int A_offset,
             int LDA, double beta, double[] C, int C_offset, int LDC) {
-        org.netlib.blas.Dsyrk.dsyrk(Dplasma.lapack_const(uplo), Dplasma.lapack_const(trans), N, K, alpha, A, A_offset,
+        BLAS.getInstance().dsyrk(Dplasma.lapack_const(uplo), Dplasma.lapack_const(trans), N, K, alpha, A, A_offset,
                 LDA, beta, C, C_offset, LDC);
     }
 
@@ -60,7 +61,7 @@ class DcoreBLAS {
      */
     protected static void core_DTRSM(int side, int uplo, int transA, int diag, int M, int N, double alpha, double[] A,
             int A_offset, int LDA, double[] B, int B_offset, int LDB) {
-        org.netlib.blas.Dtrsm.dtrsm(Dplasma.lapack_const(side), Dplasma.lapack_const(uplo), Dplasma
+        BLAS.getInstance().dtrsm(Dplasma.lapack_const(side), Dplasma.lapack_const(uplo), Dplasma
                 .lapack_const(transA), Dplasma.lapack_const(diag), M, N, alpha, A, A_offset, LDA, B, B_offset, LDB);
     }
 
@@ -68,7 +69,7 @@ class DcoreBLAS {
      */
     protected static void core_DGEMM(int transA, int transB, int M, int N, int K, double alpha, double[] A,
             int A_offset, int LDA, double[] B, int B_offset, int LDB, double beta, double[] C, int C_offset, int LDC) {
-        org.netlib.blas.Dgemm.dgemm(Dplasma.lapack_const(transA), Dplasma.lapack_const(transB), M, N, K, alpha, A,
+        BLAS.getInstance().dgemm(Dplasma.lapack_const(transA), Dplasma.lapack_const(transB), M, N, K, alpha, A,
                 A_offset, LDA, B, B_offset, LDB, beta, C, C_offset, LDC);
     }
 

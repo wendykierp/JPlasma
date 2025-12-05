@@ -30,8 +30,8 @@
         <url>https://github.com/wendykierp/JPlasma.git</url>
         <connection>scm:git:https://github.com/wendykierp/JPlasma.git</connection>
         <developerConnection>scm:git:https://github.com/wendykierp/JPlasma.git</developerConnection>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 
     <developers>
         <developer>
@@ -144,9 +144,15 @@
         </dependency>
         
         <dependency>
-            <groupId>net.sourceforge.f2j</groupId>
-            <artifactId>arpack_combined_all</artifactId>
-            <version>0.1</version>
+            <groupId>dev.ludovic.netlib</groupId>
+            <artifactId>lapack</artifactId>
+            <version>3.0.5</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>dev.ludovic.netlib</groupId>
+            <artifactId>blas</artifactId>
+            <version>3.0.5</version>
         </dependency>
         
         <dependency>
